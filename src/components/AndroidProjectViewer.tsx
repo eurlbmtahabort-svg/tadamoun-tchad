@@ -470,6 +470,89 @@ Upload \`app/src/main/assets/index.html\` directly to any Web2APK compiler:
 - Package: \`org.tadamoun.tchad\`
 - Name: \`Tadamoun Tchad\`
 - Color: \`#002654\``
+  },
+  {
+    id: 'github_actions',
+    name: '.github/workflows/build-apk.yml',
+    path: '.github/workflows/build-apk.yml',
+    language: 'yaml',
+    descriptionAr: 'سير عمل GitHub Actions لبناء ونشر ملف الـ APK تلقائياً في صفحة Releases عند كل Push للفرع الرئيسي.',
+    descriptionFr: 'Workflow GitHub Actions compilant et publiant automatiquement l\'APK dans les Releases lors de chaque push.',
+    content: `name: Build & Release Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    name: Build & Publish Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 🐘 Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.2'
+
+      - name: 🛠️ Ensure Web Assets are Up to Date
+        run: |
+          mkdir -p android/app/src/main/assets
+          if [ -f public/tadamoun_standalone.html ]; then
+            cp public/tadamoun_standalone.html android/app/src/main/assets/index.html
+          fi
+
+      - name: 🔑 Grant Execute Permission to Gradlew
+        run: chmod +x android/gradlew || true
+
+      - name: 🔨 Compile Android APK
+        working-directory: android
+        run: |
+          ./gradlew assembleRelease --no-daemon --stacktrace || ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: 📦 Locate & Prepare APK Artifact
+        run: |
+          mkdir -p release-output
+          APK_FILE=$(find android/app/build/outputs/apk -name "*.apk" | head -n 1)
+          cp "$APK_FILE" release-output/Tadamoun-Tchad-v1.0.0.apk
+          echo "APK_PATH=release-output/Tadamoun-Tchad-v1.0.0.apk" >> $GITHUB_ENV
+
+      - name: 📤 Upload APK as Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tadamoun-Tchad-Android-APK
+          path: \${{ env.APK_PATH }}
+          retention-days: 90
+
+      - name: 🚀 Publish GitHub Release & Attach APK
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        with:
+          tag_name: v1.0.\${{ github.run_number }}
+          name: "تضامن تشاد - Tadamoun Tchad v1.0.\${{ github.run_number }}"
+          files: \${{ env.APK_PATH }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}`
   }
 ];
 
