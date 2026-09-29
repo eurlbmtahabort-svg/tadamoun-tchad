@@ -292,8 +292,7 @@ class MainActivity : AppCompatActivity() {
     descriptionAr: 'ملف بيان التطبيق يحتوي على أذونات الاتصال، تحديد الموقع الجغرافي، الكاميرا والوصول للإنترنت.',
     descriptionFr: 'Manifest Android avec permissions d\'appel (CALL_PHONE), géolocalisation désertique (ACCESS_FINE_LOCATION), et caméra.',
     content: `<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.tadamoun.tchad">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Permissions for Consular Aid, SOS Hotline, GPS, and Document Uploads -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -311,9 +310,9 @@ class MainActivity : AppCompatActivity() {
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TadamounTchad"
         android:usesCleartextTraffic="true">
@@ -527,14 +526,11 @@ jobs:
       - name: 🔨 Compile Android APK
         working-directory: android
         run: |
-          # Generate gradle-wrapper.jar if not committed in git
-          gradle wrapper --gradle-version 8.2 || true
-          chmod +x gradlew || true
+          # Ensure gradle wrapper jar is generated
+          gradle wrapper --gradle-version 8.2
+          chmod +x gradlew
 
-          # Build APK directly using gradle or generated gradlew
-          gradle assembleRelease --no-daemon --stacktrace || \
-          gradle assembleDebug --no-daemon --stacktrace || \
-          ./gradlew assembleRelease --no-daemon --stacktrace || \
+          # Build APK
           ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: 📦 Locate & Prepare APK Artifact

@@ -52,14 +52,11 @@ jobs:
       - name: 🔨 Compile Android APK
         working-directory: android
         run: |
-          # Generate gradle-wrapper.jar if not committed in git
-          gradle wrapper --gradle-version 8.2 || true
-          chmod +x gradlew || true
+          # Ensure gradle wrapper jar is generated
+          gradle wrapper --gradle-version 8.2
+          chmod +x gradlew
 
-          # Build APK directly using gradle or generated gradlew
-          gradle assembleRelease --no-daemon --stacktrace || \
-          gradle assembleDebug --no-daemon --stacktrace || \
-          ./gradlew assembleRelease --no-daemon --stacktrace || \
+          # Build APK
           ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: 📦 Locate & Prepare APK Artifact
