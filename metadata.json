@@ -1,0 +1,6 @@
+{
+  "name": "Tadamoun Tchad - Consular Support",
+  "description": "Mobile consular assistance, emergency SOS hotline, legal protection, civil status registration, and humanitarian aid for the Chadian community in Southern Algeria (Tamanrasset).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
