@@ -38,6 +38,9 @@ jobs:
         with:
           gradle-version: '8.2'
 
+      - name: 📱 Set up Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: 🛠️ Ensure Web Assets are Up to Date
         run: |
           mkdir -p android/app/src/main/assets
@@ -45,15 +48,18 @@ jobs:
             cp public/tadamoun_standalone.html android/app/src/main/assets/index.html
           fi
 
-      - name: 🔑 Grant Execute Permission to Gradlew
-        run: |
-          chmod +x android/gradlew || true
-
       - name: 🔨 Compile Android APK
         working-directory: android
         run: |
-          # Build APK (assembleRelease falls back to debug signing config defined in build.gradle)
-          ./gradlew assembleRelease --no-daemon --stacktrace || ./gradlew assembleDebug --no-daemon --stacktrace
+          # Generate gradle-wrapper.jar if not committed in git
+          gradle wrapper --gradle-version 8.2 || true
+          chmod +x gradlew || true
+
+          # Build APK directly using gradle or generated gradlew
+          gradle assembleRelease --no-daemon --stacktrace || \
+          gradle assembleDebug --no-daemon --stacktrace || \
+          ./gradlew assembleRelease --no-daemon --stacktrace || \
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: 📦 Locate & Prepare APK Artifact
         run: |
