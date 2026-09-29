@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>تضامن تشاد - تمنراست | Tadamoun Tchad</title>
+  <meta name="theme-color" content="#002654">
+  <style>
+    :root {
+      --chad-blue: #002654;
+      --chad-gold: #FFCD00;
+      --chad-red: #C8102E;
+      --bg-dark: #020617;
+      --card-bg: #0f172a;
+      --border-color: #1e293b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-dark); color: #f8fafc; line-height: 1.5; padding-bottom: 80px; }
+    .top-bar { height: 6px; width: 100%; display: flex; }
+    .top-bar .b1 { flex: 1; background: var(--chad-blue); }
+    .top-bar .b2 { flex: 1; background: var(--chad-gold); }
+    .top-bar .b3 { flex: 1; background: var(--chad-red); }
+    header { position: sticky; top: 0; z-index: 50; background: rgba(15,23,42,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .container { max-width: 600px; margin: 0 auto; padding: 16px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; border-radius: 16px; padding: 12px 16px; border: none; cursor: pointer; text-decoration: none; font-size: 13px; transition: transform 0.1s; }
+    .btn:active { transform: scale(0.97); }
+    .btn-red { background: linear-gradient(135deg, #e11d48, #be123c); color: white; box-shadow: 0 4px 15px rgba(225,29,72,0.4); }
+    .btn-green { background: linear-gradient(135deg, #059669, #047857); color: white; box-shadow: 0 4px 15px rgba(5,150,105,0.4); }
+    .btn-gold { background: var(--chad-gold); color: #020617; }
+    .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px; padding: 18px; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    .nav-tabs { display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px; background: rgba(15,23,42,0.8); border-bottom: 1px solid var(--border-color); }
+    .nav-tab { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; background: #1e293b; color: #94a3b8; border: none; cursor: pointer; white-space: nowrap; }
+    .nav-tab.active { background: var(--chad-gold); color: #020617; }
+    .nav-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.98); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 8px; z-index: 40; }
+    .nav-bottom button { background: none; border: none; color: #64748b; font-size: 11px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+    .nav-bottom button.active { color: var(--chad-gold); }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 6px; color: #cbd5e1; }
+    .form-control { width: 100%; padding: 12px; border-radius: 14px; background: #1e293b; border: 1px solid #334155; color: white; font-size: 13px; outline: none; }
+    .sos-fab { position: fixed; bottom: 75px; right: 16px; z-index: 45; border-radius: 50px; padding: 12px 20px; font-size: 13px; font-weight: 900; background: #dc2626; color: white; border: 3px solid rgba(255,255,255,0.2); box-shadow: 0 8px 25px rgba(220,38,38,0.6); display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    [dir="ltr"] .sos-fab { right: auto; left: 16px; }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; padding: 16px; }
+    .modal.active { display: flex; }
+    .checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px; border-radius: 12px; background: #1e293b; margin-bottom: 8px; cursor: pointer; font-size: 12px; }
+    .checklist-item.checked { background: #064e3b; color: #a7f3d0; text-decoration: line-through; }
+  </style>
+</head>
+<body>
+  <div class="top-bar"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+  <header>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="width:36px;height:36px;border-radius:10px;background:#002654;border:1px solid #FFCD00;display:flex;align-items:center;justify-content:center;font-weight:900;color:#FFCD00;">TT</div>
+      <div>
+        <h1 style="font-size:15px;font-weight:900;" id="appTitle">تضامن تشاد</h1>
+        <p style="font-size:10px;color:#94a3b8;" id="appSubtitle">القنصلية الفخرية - تمنراست</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;">
+      <button onclick="toggleLang()" class="btn" style="background:#1e293b;color:#FFCD00;padding:6px 12px;font-size:11px;" id="langBtn">Français</button>
+      <button onclick="openSos()" class="btn btn-red" style="padding:6px 10px;font-size:11px;">SOS</button>
+    </div>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('home')" id="tabHome">الرئيسية</button>
+    <button class="nav-tab" onclick="showTab('pass')" id="tabPass">جواز المرور</button>
+    <button class="nav-tab" onclick="showTab('legal')" id="tabLegal">استشارة قانونية</button>
+    <button class="nav-tab" onclick="showTab('baby')" id="tabBaby">تسجيل المواليد</button>
+    <button class="nav-tab" onclick="showTab('health')" id="tabHealth">الصحة والحقوق</button>
+  </div>
+
+  <div class="container">
+    <!-- TAB 1: HOME -->
+    <div id="viewHome">
+      <div class="card" style="text-align:center;background:linear-gradient(145deg,#001D45,#002654);border-color:#1e3a8a;">
+        <!-- Embedded Inline Consular Shield SVG -->
+        <svg width="150" height="150" viewBox="0 0 320 320" style="margin:0 auto 12px;display:block;">
+          <circle cx="160" cy="160" r="145" stroke="#FFCD00" stroke-width="2" stroke-dasharray="6 4" opacity="0.6" fill="#001738"/>
+          <path d="M160 55 C215 55 235 70 235 125 C235 200 185 240 160 254 C135 240 85 200 85 125 C85 70 105 55 160 55 Z" fill="#FFCD00"/>
+          <path d="M160 60 C208 60 227 74 227 125 C227 194 180 232 160 246 C140 232 93 194 93 125 C93 74 112 60 160 60 Z" fill="#002654"/>
+          <!-- Tricolor accents inside shield -->
+          <path d="M115 72 C101 88 98 108 98 126 C98 178 130 214 140 226 L140 72 Z" fill="#002654"/>
+          <path d="M140 68 L180 68 L180 240 C173 243 167 245 160 246 C153 245 147 243 140 240 Z" fill="#FFCD00"/>
+          <path d="M180 72 L205 72 C219 88 222 108 222 126 C222 178 190 214 180 226 Z" fill="#C8102E"/>
+          <!-- Protective clasped hands -->
+          <path d="M52 235 C62 205 88 200 120 220 C138 232 152 248 156 262 C146 276 114 266 94 274 C78 280 65 264 52 235 Z" fill="#D49B6A"/>
+          <path d="M268 235 C258 205 232 200 200 220 C182 232 168 248 164 262 C174 276 206 266 226 274 C242 280 255 264 268 235 Z" fill="#C98B58"/>
+        </svg>
+
+        <span style="background:rgba(255,205,0,0.2);color:#FFCD00;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:bold;display:inline-block;margin-bottom:8px;" id="badgeCandidate">مبادرة مرشح منصب القنصل الفخري بتمنراست</span>
+        <h2 style="font-size:18px;font-weight:900;margin-bottom:6px;" id="heroTitle">سندكم الدائم في تمنراست والجنوب</h2>
+        <p style="font-size:12px;color:#cbd5e1;margin-bottom:14px;" id="heroDesc">منصة لخدمة الجالية التشادية بالجنوب الجزائري: حماية، وثائق سفر، ومساعدة إنسانية.</p>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <a href="tel:+213661168561" class="btn btn-red">📞 <span id="callDirect">اتصال طوارئ</span></a>
+          <a href="https://wa.me/213661168561" target="_blank" class="btn btn-green">💬 WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:4px solid #FFCD00;">
+        <h3 style="font-size:14px;font-weight:bold;margin-bottom:4px;" id="hVoiceTitle">🎙️ المساعد الصوتي المباشر</h3>
+        <p style="font-size:12px;color:#94a3b8;margin-bottom:10px;" id="hVoiceDesc">إذا كنت تفضل الحديث صوتياً بدلاً من الكتابة، أرسل رسالة صوتية إلى القنصل الفخري.</p>
+        <a href="https://wa.me/213661168561" target="_blank" class="btn btn-green" style="width:100%;">إرسال رسالة صوتية عبر واتساب (+213661168561)</a>
+      </div>
+    </div>
+
+    <!-- TAB 2: LAISSEZ-PASSER -->
+    <div id="viewPass" style="display:none;">
+      <div class="card">
+        <h2 style="font-size:16px;font-weight:900;color:#FFCD00;margin-bottom:6px;" id="lpTitle">جواز المرور (Laissez-Passer) والوثائق</h2>
+        <p style="font-size:12px;color:#94a3b8;margin-bottom:12px;" id="lpDesc">إجراءات استخراج تصريح السفر الاستعجالي للعودة الآمنة إلى تشاد.</p>
+        
+        <div style="background:#1e293b;padding:12px;border-radius:14px;margin-bottom:12px;font-size:12px;">
+          <div>⏱️ <strong>مدة المعالجة:</strong> 24 إلى 48 ساعة</div>
+          <div>📅 <strong>الصلاحية:</strong> 30 يوماً لرحلة عودة واحدة</div>
+          <div>💰 <strong>الرسوم:</strong> رسوم رمزية (إعفاء تام للحالات المعوزة)</div>
+        </div>
+
+        <h4 style="font-size:13px;font-weight:bold;margin-bottom:8px;">قائمة الوثائق المطلوبة (اضغط للتأشير):</h4>
+        <div class="checklist-item" onclick="this.classList.toggle('checked')">1. نسخة من جواز السفر المنتهي أو بطاقة التعريف الوطنية</div>
+        <div class="checklist-item" onclick="this.classList.toggle('checked')">2. صورتان شمسيتان بيومتريتان حديثتان</div>
+        <div class="checklist-item" onclick="this.classList.toggle('checked')">3. تصريح ضياع من الشرطة الجزائرية (في حال الفقدان)</div>
+        <div class="checklist-item" onclick="this.classList.toggle('checked')">4. إثبات حجز السفر أو خط السير المباشر</div>
+
+        <a href="tel:+213661168561" class="btn btn-gold" style="width:100%;margin-top:10px;">طلب استخراج تصريح سفر (+213 661 16 85 61)</a>
+      </div>
+    </div>
+
+    <!-- TAB 3: LEGAL FORM -->
+    <div id="viewLegal" style="display:none;">
+      <div class="card">
+        <h2 style="font-size:16px;font-weight:900;color:#FFCD00;margin-bottom:6px;">استشارة قانونية وإنسانية سرية</h2>
+        <p style="font-size:12px;color:#94a3b8;margin-bottom:12px;">🔒 خصوصية تامة: يمكنك تقديم الطلب باسم مستعار دون كشف هويتك الكاملة.</p>
+
+        <form id="legalForm" onsubmit="submitLegal(event)">
+          <div class="form-group">
+            <label>الاسم الكامل (أو اسم مستعار):</label>
+            <input type="text" id="legName" class="form-control" placeholder="اسمك أو لقبك المستعار">
+          </div>
+          <div class="form-group">
+            <label>رقم الهاتف للتواصل / واتساب:</label>
+            <input type="tel" id="legPhone" class="form-control" placeholder="+213..." required>
+          </div>
+          <div class="form-group">
+            <label>الولاية الحالية:</label>
+            <select id="legWilaya" class="form-control">
+              <option value="Tamanrasset">تمنراست / Tamanrasset</option>
+              <option value="In Guezzam">عين قزام / In Guezzam</option>
+              <option value="In Salah">عين صالح / In Salah</option>
+              <option value="Djanet">جانت / Djanet</option>
+              <option value="Other">منطقة أخرى</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>شرح الحالة أو المشكلة:</label>
+            <textarea id="legDesc" class="form-control" rows="4" placeholder="اشرح وضعك الإداري، التوقيف، أو النزاع العمالي..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-green" style="width:100%;">إرسال الاستشارة للقنصل عبر واتساب</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 4: NEWBORN REGISTRATION -->
+    <div id="viewBaby" style="display:none;">
+      <div class="card">
+        <h2 style="font-size:16px;font-weight:900;color:#FFCD00;margin-bottom:6px;">تسجيل المواليد الجدد لحمايتهم من انعدام الجنسية</h2>
+        <p style="font-size:12px;color:#94a3b8;margin-bottom:12px;">🛡️ حماية قانونية: تسجيل المولود يضمن إصدار شهادة الميلاد القنصلية وجواز السفر.</p>
+
+        <form id="babyForm" onsubmit="submitBaby(event)">
+          <div class="form-group">
+            <label>اسم ولقب المولود:</label>
+            <input type="text" id="bbName" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>تاريخ ومكان الولادة:</label>
+            <input type="text" id="bbPlace" class="form-control" placeholder="مثال: مستشفى تمنراست المختلط" required>
+          </div>
+          <div class="form-group">
+            <label>اسم الأب وجنسيته:</label>
+            <input type="text" id="bbFather" class="form-control" placeholder="اسم الأب (تشادي)" required>
+          </div>
+          <div class="form-group">
+            <label>اسم الأم وجنسيتها:</label>
+            <input type="text" id="bbMother" class="form-control" placeholder="اسم الأم (تشادية)" required>
+          </div>
+          <div class="form-group">
+            <label>رقم هاتف الولي:</label>
+            <input type="tel" id="bbPhone" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-green" style="width:100%;">تسجيل المولود وإرسال الإشعار لواتساب</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 5: HEALTHCARE -->
+    <div id="viewHealth" style="display:none;">
+      <div class="card">
+        <h2 style="font-size:16px;font-weight:900;color:#FFCD00;margin-bottom:6px;">الحقوق الصحية والمستعجلات في الجزائر</h2>
+        <p style="font-size:12px;color:#f87171;background:#450a0a;padding:8px 12px;border-radius:12px;margin-bottom:12px;">
+          ⚖️ بموجب القانون الجزائري: كل الحالات المستعجلة الحرجة والولادة الإسعافية تعالج مجاناً بدون اشتراط مسبق للأوراق.
+        </p>
+        <div style="background:#1e293b;padding:12px;border-radius:14px;margin-bottom:10px;">
+          <strong>المستشفى العمومي المختلط بتمنراست:</strong>
+          <div style="font-size:12px;color:#94a3b8;">وسط المدينة - هاتف: 029 34 50 50</div>
+          <a href="tel:029345050" class="btn btn-red" style="padding:6px 12px;font-size:11px;margin-top:6px;">اتصال بالمستشفى</a>
+        </div>
+        <div style="background:#1e293b;padding:12px;border-radius:14px;">
+          <strong>الهلال الأحمر الجزائري - تمنراست:</strong>
+          <div style="font-size:12px;color:#94a3b8;">حي أدريان - هاتف: 029 32 18 19</div>
+          <a href="tel:029321819" class="btn btn-green" style="padding:6px 12px;font-size:11px;margin-top:6px;">اتصال بالهلال الأحمر</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING SOS BUTTON -->
+  <button class="sos-fab" onclick="openSos()">🚨 <span>SOS طوارئ</span></button>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div class="nav-bottom">
+    <button class="active" onclick="showTab('home')">🏠 <span>الرئيسية</span></button>
+    <button onclick="showTab('pass')">📄 <span>الوثائق</span></button>
+    <button onclick="showTab('legal')">⚖️ <span>قانوني</span></button>
+    <button onclick="showTab('baby')">👶 <span>المواليد</span></button>
+    <button onclick="showTab('health')">🏥 <span>الصحة</span></button>
+  </div>
+
+  <!-- SOS MODAL -->
+  <div id="sosModal" class="modal">
+    <div style="background:#0f172a;border:2px solid #dc2626;border-radius:24px;max-width:400px;width:100%;padding:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="color:#ef4444;font-size:18px;font-weight:900;">🚨 استغاثة عاجلة SOS</h3>
+        <button onclick="closeSos()" style="background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer;">✕</button>
+      </div>
+      <p style="font-size:12px;color:#fca5a5;margin-bottom:14px;">للحالات القصوى: حوادث الطرقات بالصحراء أو التوقيف الإداري.</p>
+      <a href="tel:+213661168561" class="btn btn-red" style="width:100%;margin-bottom:8px;">📞 اتصال فوري بالقنصل (+213661168561)</a>
+      <a href="tel:14" class="btn" style="width:100%;background:#1e293b;color:white;margin-bottom:8px;">🚑 الحماية المدنية الجزائرية: 14</a>
+      <a href="tel:17" class="btn" style="width:100%;background:#1e293b;color:white;margin-bottom:14px;">👮 الشرطة الجزائرية: 17</a>
+      <button onclick="closeSos()" class="btn" style="width:100%;background:#334155;color:#e2e8f0;">إغلاق</button>
+    </div>
+  </div>
+
+  <script>
+    let currentLang = 'ar';
+    function toggleLang() {
+      currentLang = currentLang === 'ar' ? 'fr' : 'ar';
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = currentLang;
+      document.getElementById('langBtn').innerText = currentLang === 'ar' ? 'Français' : 'العربية';
+      document.getElementById('appTitle').innerText = currentLang === 'ar' ? 'تضامن تشاد' : 'Tadamoun Tchad';
+      document.getElementById('appSubtitle').innerText = currentLang === 'ar' ? 'القنصلية الفخرية - تمنراست' : 'Consulat Honoraire - Tamanrasset';
+    }
+
+    function showTab(tab) {
+      ['viewHome','viewPass','viewLegal','viewBaby','viewHealth'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+      const map = { home: 'viewHome', pass: 'viewPass', legal: 'viewLegal', baby: 'viewBaby', health: 'viewHealth' };
+      if (map[tab]) document.getElementById(map[tab]).style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openSos() {
+      document.getElementById('sosModal').classList.add('active');
+      if (navigator.vibrate) navigator.vibrate([100,50,100]);
+    }
+    function closeSos() {
+      document.getElementById('sosModal').classList.remove('active');
+    }
+
+    function submitLegal(e) {
+      e.preventDefault();
+      const name = document.getElementById('legName').value || 'Anonyme';
+      const phone = document.getElementById('legPhone').value;
+      const wilaya = document.getElementById('legWilaya').value;
+      const desc = document.getElementById('legDesc').value;
+      const msg = `🔒 استشارة قانونية سرية\nالاسم: ${name}\nالهاتف: ${phone}\nالمكان: ${wilaya}\nالتفاصيل: ${desc}`;
+      window.open(`https://wa.me/213661168561?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function submitBaby(e) {
+      e.preventDefault();
+      const name = document.getElementById('bbName').value;
+      const place = document.getElementById('bbPlace').value;
+      const father = document.getElementById('bbFather').value;
+      const mother = document.getElementById('bbMother').value;
+      const phone = document.getElementById('bbPhone').value;
+      const msg = `👶 تسجيل مولود جديد\nالمولود: ${name}\nالمكان: ${place}\nالأب: ${father}\nالأم: ${mother}\nالهاتف: ${phone}`;
+      window.open(`https://wa.me/213661168561?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+  </script>
+</body>
+</html>

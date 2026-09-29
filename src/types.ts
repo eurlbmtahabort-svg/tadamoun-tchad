@@ -8,7 +8,8 @@ export type NavTab =
   | 'civil_status'
   | 'healthcare'
   | 'contacts'
-  | 'vault';
+  | 'vault'
+  | 'android_source';
 
 export interface ConsularDocumentItem {
   id: string;

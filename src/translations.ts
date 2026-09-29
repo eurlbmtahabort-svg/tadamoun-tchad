@@ -19,7 +19,8 @@ export const translations = {
       civil_status: 'تسجيل المواليد',
       healthcare: 'الصحة والحقوق',
       contacts: 'دليل الطوارئ',
-      vault: 'ملفي المحفوظ'
+      vault: 'ملفي المحفوظ',
+      android_source: 'مشروع APK'
     },
 
     hero: {
@@ -184,7 +185,8 @@ export const translations = {
       civil_status: 'État Civil',
       healthcare: 'Santé & Droits',
       contacts: 'Urgences',
-      vault: 'Mon Dossier'
+      vault: 'Mon Dossier',
+      android_source: 'Projet APK'
     },
 
     hero: {

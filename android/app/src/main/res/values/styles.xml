@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.TadamounTchad" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:statusBarColor">@color/chad_deep_blue</item>
+        <item name="android:navigationBarColor">@color/chad_background_dark</item>
+        <item name="android:windowBackground">@color/chad_background_dark</item>
+    </style>
+</resources>

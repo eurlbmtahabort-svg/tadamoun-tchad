@@ -17,7 +17,8 @@ import {
   Check, 
   ArrowRight, 
   Sparkles,
-  Award
+  Award,
+  Smartphone
 } from 'lucide-react';
 
 import { Language, NavTab } from './types';
@@ -31,6 +32,7 @@ import { HealthcareGuide } from './components/HealthcareGuide';
 import { VoiceAssistant } from './components/VoiceAssistant';
 import { OfflineVault } from './components/OfflineVault';
 import { DirectoryContacts } from './components/DirectoryContacts';
+import { AndroidProjectViewer } from './components/AndroidProjectViewer';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('ar');
@@ -125,6 +127,7 @@ export default function App() {
             { id: 'legal', label: t.tabs.legal, icon: ShieldCheck },
             { id: 'civil_status', label: t.tabs.civil_status, icon: Baby },
             { id: 'healthcare', label: t.tabs.healthcare, icon: HeartPulse },
+            { id: 'android_source', label: t.tabs.android_source, icon: Smartphone },
             { id: 'vault', label: t.tabs.vault, icon: FolderDown }
           ].map((item) => {
             const Icon = item.icon;
@@ -311,6 +314,32 @@ export default function App() {
               </a>
             </div>
 
+            {/* Android APK Native Wrapper Source Banner */}
+            <div 
+              onClick={() => navigateTo('android_source')}
+              className="p-4 rounded-3xl bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-slate-900 border border-blue-500/40 cursor-pointer hover:border-amber-400/80 transition flex items-center justify-between gap-3 shadow-lg active:scale-98"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-amber-400/20 text-amber-300 flex items-center justify-center shrink-0">
+                  <Smartphone className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+                    <span>{lang === 'ar' ? 'سورس كود تطبيق أندرويد (APK Source)' : 'Code Source Android APK'}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono">
+                      Kotlin + XML
+                    </span>
+                  </h4>
+                  <p className="text-[11px] text-gray-300">
+                    {lang === 'ar' 
+                      ? 'استعراض وتحميل MainActivity.kt و AndroidManifest جاهزة للترجمة'
+                      : 'Accéder aux fichiers Android natifs prêts à compiler'}
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="w-4 h-4 text-amber-400 rtl:rotate-180 shrink-0" />
+            </div>
+
             {/* Desert Road Safety Banner (Tamanrasset - In Guezzam - In Salah) */}
             <div className="p-4 rounded-3xl bg-slate-900 border border-slate-800 space-y-2">
               <div className="flex items-center gap-2 text-amber-400 text-xs font-bold">
@@ -345,6 +374,9 @@ export default function App() {
 
         {/* VIEW: OFFLINE VAULT */}
         {activeTab === 'vault' && <OfflineVault lang={lang} />}
+
+        {/* VIEW: ANDROID APK SOURCE */}
+        {activeTab === 'android_source' && <AndroidProjectViewer lang={lang} />}
       </main>
 
       {/* Floating SOS Hotline Button */}
